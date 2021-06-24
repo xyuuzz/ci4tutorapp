@@ -1,0 +1,13 @@
+.sampul {
+  width: 100px;
+}
+
+.table > tbody > tr > * {
+  /* Apapun yang ada di dalam tr yang ada pada tbody pada clas table */
+  vertical-align: middle; /* Ubah vertical align nya menjadi vertical/ cara menengahkan element secara vertikal */
+}
+
+.image-detail {
+  vertical-align: middle;
+  width: 170px;
+}
