@@ -14,7 +14,7 @@ class Student extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ["name", "image", "jenis_kelamin", "ttl", "class", "no_absen", "slug"];
+    protected $allowedFields = ["name", "image", "jenis_kelamin", "ttl", "class", "no_absen", "slug", "created_at", "updated_at"];
 
     // Dates
     protected $useTimestamps = true;

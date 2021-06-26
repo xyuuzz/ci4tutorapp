@@ -7,7 +7,11 @@
         <div class="col-lg-9">
             <div class="card mb-5">
                 <div class="card-header">
-                    <h4>List Siswa</h4>
+                    <h4 class="d-inline">List Siswa</h4>
+                    <form class="form-inline my-2 my-lg-0 float-right">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search"  aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                 </div>
                 <div class="card-body">
 
@@ -57,6 +61,10 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="paginate-el">
+                        <!-- MEMANGGIL PAGE PAGINATE CUSTOM -->
+                        <?= $pager->links("users", "custom_pagination") ?> 
+                    </div>
                     <?php endif;?>
 
                     <form class="<?=session("view") ? "mt-5" : "d-none"?>" method="POST" action="/siswa/buat"
@@ -66,7 +74,18 @@
                             <label for="foto_siswa">
                                 Foto Siswa
                             </label>
-                            <input disabled id="foto_siswa" name="image" type="file" class="form-control">
+                            <div class="d-flex">
+                                <div class="col-sm-2">
+                                    <img src="/images/default.png" class="img-thumbnail img-preview">
+                                </div>
+
+                                <input id="foto_siswa" name="image" type="file" 
+                                class="form-control col-lg-8
+                                <?=($validation->hasError('image')) ? 'is-invalid' : ""?>" onchange="previewImage()">
+                            </div>
+                            <div id="imageFeedback" class="invalid-feedback">
+                                <?=$validation->getError("image")?>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="nama_siswa">

@@ -3,6 +3,11 @@
 <?php $this->section("content")?>
 
 <div class="container mt-5">
+    <?php if (session("success")): ?>
+        <div class="alert alert-success mt-5" role="alert">
+            <?=session("success")?>
+        </div>
+    <?php endif;?>
     <div class="card mb-3 <?=!session("update") ? "mt-5" : "d-none"?>" style="max-width: 540px;">
         <div class="row no-gutters">
             <div class="col-md-4">
@@ -11,7 +16,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">Detail Siswa <?=$student["name"]?></h5>
+                    <h5 class="card-title">Detail Siswa <strong><?=$student["name"]?></strong></h5>
                     <p class="card-text">Nama : <?=$student["name"]?></p>
                     <p class="card-text">Tempat, Tanggal Lahir : <?=$student["ttl"]?></p>
                     <p class="card-text">Jenis Kelamin : <?=$student["jenis_kelamin"]?></p>
@@ -35,19 +40,24 @@
 
     </div>
 
-    <form class="<?=session("update") ? "mt-5" : "d-none"?> updateFrom" method="POST" 
-    action="/siswa/<?= $student["id"] ?>" enctype="multipart/form-data">
+    <form class="<?=session("update") ? "mt-5" : "d-none"?> updateFrom" method="POST"
+        action="/siswa/<?=$student["id"]?>" enctype="multipart/form-data">
         <?=csrf_field()?>
         <input type="hidden" name="_method" value="PATCH">
-        <button type="button" class="btn btn-sm btn-outline-primary editButton mb-3">Detail Siswa</button>
+        <a href="/siswa/<?=$student["slug"]?>" class="btn btn-sm btn-outline-primary mb-3">Detail Siswa</a>
         <h3 class="mb-3">Ubah Data Siswa</h3>
         <div class="form-group">
             <label for="foto_siswa">
                 Foto Siswa
             </label>
-            <img src="/images/<?=$student["image"]?>" alt="student image"
-                    class="rounded-circle image-detail mt-3 ml-2 mr-2 d-block mb-2">
-            <input disabled id="foto_siswa" name="image" type="file" class="form-control col-lg-4">
+            <div class="d-flex">
+                <div class="col-sm-2">
+                    <img src="/images/<?=$student["image"]?>" class="img-thumbnail img-preview">
+                </div>
+                <input id="foto_siswa" name="image" type="file" class="form-control col-lg-8
+                <?=($validation->hasError('image')) ? 'is-invalid' : ""?>" 
+                onchange="previewImage()">
+            </div>
         </div>
         <div class="form-group">
             <label for="nama_siswa">
@@ -76,13 +86,13 @@
                 Jenis Kelamin
             </label>
             <select name="jenis_kelamin" id="jenis_kelamin" class="custom-select">
-                <?php if($student["jenis_kelamin"] === "Laki-Laki") : ?>
-                    <option selected value="Laki-Laki">Laki-Laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                <?php else : ?>
-                    <option value="Laki-Laki">Laki-Laki</option>
-                    <option selected value="Perempuan">Perempuan</option>
-                <?php endif; ?>
+                <?php if ($student["jenis_kelamin"] === "Laki-Laki"): ?>
+                <option selected value="Laki-Laki">Laki-Laki</option>
+                <option value="Perempuan">Perempuan</option>
+                <?php else: ?>
+                <option value="Laki-Laki">Laki-Laki</option>
+                <option selected value="Perempuan">Perempuan</option>
+                <?php endif;?>
             </select>
         </div>
         <div class="form-group">
@@ -100,7 +110,8 @@
             <label for="no_absen">
                 No Absen Siswa
             </label>
-            <input required value="<?=old("no_absen") ?? $student["no_absen"]?>" id="no_absen" name="no_absen" type="number" class="form-control
+            <input required value="<?=old("no_absen") ?? $student["no_absen"]?>" id="no_absen" name="no_absen"
+                type="number" class="form-control
                             <?=($validation->hasError('no_absen')) ? 'is-invalid' : ''?>"
                 aria-describedby="noAbsenFeedback">
             <div id="noAbsenFeedback" class="invalid-feedback">

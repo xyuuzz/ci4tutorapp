@@ -11,9 +11,9 @@ class AddStudents extends Migration
         $this->forge->addField([
             "id" => [
                 "type" => "INT",
-                "constraint" => "11",
-                "unsigned" => true,
-                "auto_increment" => true,
+                "constraint" => 11,
+                "unsigned" => TRUE,
+                "auto_increment" => TRUE,
             ],
             "name" => [
                 "type" => "VARCHAR",
@@ -26,15 +26,15 @@ class AddStudents extends Migration
             "image" => [
                 "type" => "VARCHAR",
                 "constraint" => "255",
-                "null" => true,
+                "null" => TRUE,
             ],
             "jenis_kelamin" => [
                 "type" => "VARCHAR",
                 "constraint" => "255",
             ],
             "ttl" => [
-                "type" => "date",
-                "null" => true,
+                "type" => "DATE",
+                "null" => TRUE,
             ],
             "class" => [
                 "type" => "VARCHAR",
@@ -45,10 +45,12 @@ class AddStudents extends Migration
                 "constraint" => "11",
             ],
             "created_at" => [
-                "type" => "datetime",
+                "type" => "DATETIME",
+                "null" => TRUE
             ],
             "updated_at" => [
-                "type" => "datetime",
+                "type" => "DATETIME",
+                "null" => TRUE
             ],
         ]);
 
@@ -58,6 +60,6 @@ class AddStudents extends Migration
 
     public function down()
     {
-        $this->forge->dropTable("students");
+        $this->forge->dropTable(tableName:"students", cascade:true);
     }
 }
