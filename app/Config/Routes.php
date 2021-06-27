@@ -41,6 +41,7 @@ $routes->post("/siswa/buat", "StudentController::store");
 $routes->patch("/siswa/(:any)", "StudentController::update/$1");
 $routes->delete("/siswa/(:num)", "StudentController::delete/$1");
 $routes->post("/siswa/search", "StudentController::search");
+$routes->get("/mahasiswa", "MahasiswaController::index");
 
 // Tutorial CI4
 // $routes->get('/', 'Home::index'); # penulisan normal route
